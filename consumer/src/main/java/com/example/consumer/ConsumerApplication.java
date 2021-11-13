@@ -17,14 +17,19 @@ public class ConsumerApplication {
     CommandLineRunner lookup(UserClient userClient) {
         return args -> {
             System.out.println("--- Get user by Id ---");
-            GetUserByIDResponse getUserByIDResponse = userClient.getUserByID(5L);
+            long id = 6;
+            GetUserByIDResponse getUserByIDResponse = userClient.getUserByID(id);
             UserDto userDto = getUserByIDResponse.getUser();
-            System.out.println(userDto.getId() + ", " + userDto.getName()
-                    + ", " + userDto.getAge());
+            if (userDto == null) {
+                System.out.println("User " + id + " not found");
+            } else {
+                System.out.println(userDto.getId() + ", " + userDto.getName()
+                        + ", " + userDto.getAge());
+            }
 
             System.out.println("--- Get all user ---");
             GetAllUserResponse getAllUserResponse = userClient.getAllUser();
-            getAllUserResponse.getUser().stream()
+            getAllUserResponse.getUser()
                     .forEach(e -> System.out.println(e.getId() + ", " + e.getName() + ", " + e.getAge()));
 
             System.out.println("--- Add user ---");
@@ -44,9 +49,11 @@ public class ConsumerApplication {
                     ", Message: " + serviceStatus.getMessage());
 
             System.out.println("--- Update user ---");
+            id = 7;
             name = "An Nguyen";
-            age = 21;
+            age = 11;
             UserDto updatedUser = new UserDto();
+            updatedUser.setId(id);
             updatedUser.setName(name);
             updatedUser.setAge(age);
             UpdateUserResponse updateUserResponse = userClient.updateUser(updatedUser);
@@ -54,8 +61,8 @@ public class ConsumerApplication {
             System.out.println("StatusCode: " + serviceStatus.getStatusCode() +
                     ", Message: " + serviceStatus.getMessage());
             System.out.println("--- Delete Article ---");
-            long userID = 3;
-            DeleteUserResponse deleteArticleResponse = userClient.deleteUserResponse(userID);
+            id = 6;
+            DeleteUserResponse deleteArticleResponse = userClient.deleteUserResponse(id);
             serviceStatus = deleteArticleResponse.getServiceStatus();
             System.out.println("StatusCode: " + serviceStatus.getStatusCode() +
                     ", Message: " + serviceStatus.getMessage());
