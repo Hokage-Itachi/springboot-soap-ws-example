@@ -62,7 +62,7 @@ public class UserServiceEndpoints {
         AddUserResponse response = new AddUserResponse();
         ServiceStatus serviceStatus = new ServiceStatus();
         User user = userConverter.toEntity(request.getUser());
-        User savedUser = userService.save(user);
+        User savedUser = userService.addUser(user);
 
         if (savedUser != null) {
             response.setUser(userConverter.toDto(user));
@@ -86,10 +86,14 @@ public class UserServiceEndpoints {
 
         User user = userConverter.toEntity(request.getUser());
 
-        userService.save(user);
-
-        serviceStatus.setStatusCode("200");
-        serviceStatus.setMessage("User updated");
+        User updatedUser = userService.updateUser(user);
+        if (updatedUser == null) {
+            serviceStatus.setStatusCode("404");
+            serviceStatus.setMessage("User " + user.getId() + " not found");
+        } else {
+            serviceStatus.setStatusCode("200");
+            serviceStatus.setMessage("User updated");
+        }
 
         response.setServiceStatus(serviceStatus);
 
@@ -103,10 +107,15 @@ public class UserServiceEndpoints {
         DeleteUserResponse response = new DeleteUserResponse();
         ServiceStatus serviceStatus = new ServiceStatus();
 
-        userService.deleteById(request.getId());
+        try {
+            userService.deleteById(request.getId());
+            serviceStatus.setStatusCode("200");
+            serviceStatus.setMessage("User deleted");
+        } catch (NullPointerException e) {
+            serviceStatus.setStatusCode("404");
+            serviceStatus.setMessage("User " + request.getId() + " not found");
+        }
 
-        serviceStatus.setStatusCode("200");
-        serviceStatus.setMessage("User deleted");
 
         response.setServiceStatus(serviceStatus);
 
