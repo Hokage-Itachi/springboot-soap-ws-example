@@ -28,14 +28,25 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User save(User user) {
+    public User addUser(User user) {
         if (user != null) {
             return userRepository.save(user);
         }
         return null;
     }
 
+    public User updateUser(User user) {
+        if (user == null || findById(user.getId()) == null) {
+            return null;
+        }
+        return userRepository.save(user);
+
+    }
+
     public void deleteById(Long id) {
+        if (findById(id) == null) {
+            throw new NullPointerException("User not found");
+        }
         userRepository.deleteById(id);
     }
 }
