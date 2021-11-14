@@ -35,10 +35,7 @@ public class ConsumerApplication {
             String name = "An Nguyen";
             int age = 21;
             System.out.println("--- Add user: name=" + name + ", age=" + age);
-            UserDto addedUser = new UserDto();
-            addedUser.setName(name);
-            addedUser.setAge(age);
-            AddUserResponse addUserResponse = userClient.addUser(addedUser);
+            AddUserResponse addUserResponse = userClient.addUser(name, age);
             userDto = addUserResponse.getUser();
             if (userDto != null) {
                 System.out.println(userDto.getId() + ", " + userDto.getName()

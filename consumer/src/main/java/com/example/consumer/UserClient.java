@@ -22,10 +22,11 @@ public class UserClient extends WebServiceGatewaySupport {
                 .marshalSendAndReceive(request, new SoapActionCallback(soapAction));
     }
 
-    public AddUserResponse addUser(UserDto userDto) {
+    public AddUserResponse addUser(String name, int age) {
         String soapAction = WS_URL + "/addUserRequest";
         AddUserRequest request = new AddUserRequest();
-        request.setUser(userDto);
+        request.setName(name);
+        request.setAge(age);
         return (AddUserResponse) getWebServiceTemplate()
                 .marshalSendAndReceive(request, new SoapActionCallback(soapAction));
     }
