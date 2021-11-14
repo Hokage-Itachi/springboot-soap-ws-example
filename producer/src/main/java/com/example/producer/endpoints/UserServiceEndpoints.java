@@ -61,7 +61,10 @@ public class UserServiceEndpoints {
     public AddUserResponse addUser(@RequestPayload AddUserRequest request) {
         AddUserResponse response = new AddUserResponse();
         ServiceStatus serviceStatus = new ServiceStatus();
-        User user = userConverter.toEntity(request.getUser());
+        UserDto userDto = new UserDto();
+        userDto.setName(request.getName());
+        userDto.setAge(request.getAge());
+        User user = userConverter.toEntity(userDto);
         User savedUser = userService.addUser(user);
 
         if (savedUser != null) {
