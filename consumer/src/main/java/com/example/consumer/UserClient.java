@@ -15,10 +15,10 @@ public class UserClient extends WebServiceGatewaySupport {
                 .marshalSendAndReceive(request, new SoapActionCallback(soapAction));
     }
 
-    public GetAllUserResponse getAllUser() {
+    public GetAllUsersResponse getAllUser() {
         String soapAction = WS_URL + "/getAllUserRequest";
-        GetAllUserRequest request = new GetAllUserRequest();
-        return (GetAllUserResponse) getWebServiceTemplate()
+        GetAllUsersRequest request = new GetAllUsersRequest();
+        return (GetAllUsersResponse) getWebServiceTemplate()
                 .marshalSendAndReceive(request, new SoapActionCallback(soapAction));
     }
 

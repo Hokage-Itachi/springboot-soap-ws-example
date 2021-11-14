@@ -28,7 +28,7 @@ public class ConsumerApplication {
             }
 
             System.out.println("--- Get all user ---");
-            GetAllUserResponse getAllUserResponse = userClient.getAllUser();
+            GetAllUsersResponse getAllUserResponse = userClient.getAllUser();
             getAllUserResponse.getUser()
                     .forEach(e -> System.out.println(e.getId() + ", " + e.getName() + ", " + e.getAge()));
 
