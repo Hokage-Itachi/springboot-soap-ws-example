@@ -27,7 +27,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="getAllUserRequest">
+    <xs:element name="getAllUsersRequest">
         <xs:complexType/>
     </xs:element>
 
@@ -65,7 +65,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getAllUserResponse">
+    <xs:element name="getAllUsersResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="user" type="tns:userDto" maxOccurs="unbounded"/>

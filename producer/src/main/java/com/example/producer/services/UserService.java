@@ -30,7 +30,10 @@ public class UserService {
 
     public User addUser(User user) {
         if (user != null) {
-            return userRepository.save(user);
+            User addedUser = userRepository.save(user);
+            userRepository.flush();
+            addedUser.getId();
+            return addedUser;
         }
         return null;
     }

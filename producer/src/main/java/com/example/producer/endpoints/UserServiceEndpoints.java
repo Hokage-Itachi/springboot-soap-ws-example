@@ -33,7 +33,7 @@ public class UserServiceEndpoints {
         if (user == null) {
             response.setUser(null);
             serviceStatus.setStatusCode("404");
-            serviceStatus.setMessage("User not found");
+            serviceStatus.setMessage("User with id=" + request.getId() + " not found");
         } else {
             serviceStatus.setStatusCode("200");
             serviceStatus.setMessage("Get user success");
@@ -44,10 +44,10 @@ public class UserServiceEndpoints {
         return response;
     }
 
-    @PayloadRoot(namespace = WsSettings.NAMESPACE_URI, localPart = "getAllUserRequest")
+    @PayloadRoot(namespace = WsSettings.NAMESPACE_URI, localPart = "getAllUsersRequest")
     @ResponsePayload
-    public GetAllUserResponse getAllUser() {
-        GetAllUserResponse response = new GetAllUserResponse();
+    public GetAllUsersResponse getAllUsers() {
+        GetAllUsersResponse response = new GetAllUsersResponse();
         List<User> users = userService.findAll();
         List<UserDto> userDtoList = users.stream().map(userConverter::toDto).collect(Collectors.toList());
         response.getUser().addAll(userDtoList);
@@ -68,7 +68,7 @@ public class UserServiceEndpoints {
         User savedUser = userService.addUser(user);
 
         if (savedUser != null) {
-            response.setUser(userConverter.toDto(user));
+            response.setUser(userConverter.toDto(savedUser));
             serviceStatus.setStatusCode("200");
             serviceStatus.setMessage("User added");
         } else {
@@ -92,7 +92,7 @@ public class UserServiceEndpoints {
         User updatedUser = userService.updateUser(user);
         if (updatedUser == null) {
             serviceStatus.setStatusCode("404");
-            serviceStatus.setMessage("User " + user.getId() + " not found");
+            serviceStatus.setMessage("User with id=" + user.getId() + " not found");
         } else {
             serviceStatus.setStatusCode("200");
             serviceStatus.setMessage("User updated");
@@ -116,7 +116,8 @@ public class UserServiceEndpoints {
             serviceStatus.setMessage("User deleted");
         } catch (NullPointerException e) {
             serviceStatus.setStatusCode("404");
-            serviceStatus.setMessage("User " + request.getId() + " not found");
+            serviceStatus.setMessage("User with id=" + request.getId() + " not found");
+
         }
 
 
