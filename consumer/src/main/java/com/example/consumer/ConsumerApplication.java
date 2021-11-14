@@ -16,8 +16,8 @@ public class ConsumerApplication {
     @Bean
     CommandLineRunner lookup(UserClient userClient) {
         return args -> {
-            System.out.println("--- Get user by Id ---");
-            long id = 5;
+            long id = 6;
+            System.out.println("--- Get user by Id: " + id);
             GetUserByIDResponse getUserByIDResponse = userClient.getUserByID(id);
             UserDto userDto = getUserByIDResponse.getUser();
             if (userDto == null) {
@@ -25,7 +25,6 @@ public class ConsumerApplication {
             } else {
                 System.out.println(userDto.getId() + ", " + userDto.getName()
                         + ", " + userDto.getAge());
-
             }
 
             System.out.println("--- Get all user ---");
@@ -33,9 +32,9 @@ public class ConsumerApplication {
             getAllUserResponse.getUser()
                     .forEach(e -> System.out.println(e.getId() + ", " + e.getName() + ", " + e.getAge()));
 
-            System.out.println("--- Add user ---");
             String name = "An Nguyen";
-            int age = 22;
+            int age = 21;
+            System.out.println("--- Add user: name=" + name + ", age=" + age);
             UserDto addedUser = new UserDto();
             addedUser.setName(name);
             addedUser.setAge(age);
@@ -49,10 +48,11 @@ public class ConsumerApplication {
             System.out.println("StatusCode: " + serviceStatus.getStatusCode() +
                     ", Message: " + serviceStatus.getMessage());
 
-            System.out.println("--- Update user ---");
-            id = 6;
+            id = 7;
+            System.out.println("--- Update user: id=" + id);
             name = "An Nguyen";
-            age = 21;
+            age = 11;
+            System.out.println("With: name=" + name + ", age=" + age);
             UserDto updatedUser = new UserDto();
             updatedUser.setId(id);
             updatedUser.setName(name);
@@ -61,8 +61,8 @@ public class ConsumerApplication {
             serviceStatus = updateUserResponse.getServiceStatus();
             System.out.println("StatusCode: " + serviceStatus.getStatusCode() +
                     ", Message: " + serviceStatus.getMessage());
-            System.out.println("--- Delete Article ---");
-            id = 5;
+            id = 6;
+            System.out.println("--- Delete user: id=" + id);
             DeleteUserResponse deleteArticleResponse = userClient.deleteUserResponse(id);
             serviceStatus = deleteArticleResponse.getServiceStatus();
             System.out.println("StatusCode: " + serviceStatus.getStatusCode() +
